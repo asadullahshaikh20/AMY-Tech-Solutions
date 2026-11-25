@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+/*
+  Light corporate theme.
+  Components were written against a dark palette (text-white, bg-ink-*, text-slate-*), so the light theme
+  remaps those tokens: "white" is the primary ink colour, "ink" is the surface scale, "slate" is muted text.
+  Wrap any navy area (header, hero, footer) in .on-navy to restore the light-on-dark palette inside it.
+*/
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #232A41;
+  --color-navy-deep: #1A2033;
+  --color-snow: #FFFFFF;
+
+  --color-white: #1B2238;
+  --color-slate-200: #2A3148;
+  --color-slate-300: #3D4560;
+  --color-slate-400: #5A627A;
+  --color-slate-500: #7B8296;
+  --color-slate-600: #A3A9B8;
+
+  --color-ink-950: #FFFFFF;
+  --color-ink-900: #F5F6F8;
+  --color-ink-800: #EEF0F4;
+  --color-ink-700: #DDE1E8;
+  --color-surface: #FFFFFF;
+
+  --color-brand-300: #1D4ED8;
+  --color-brand-400: #2563EB;
+  --color-brand-500: #3B82F6;
+  --color-brand-600: #2563EB;
+  --color-brand-700: #1E40AF;
+  --color-orbit-100: #7C2D12;
+  --color-orbit-300: #C2410C;
+  --color-orbit-400: #EA580C;
+  --color-orbit-500: #F97316;
+  --color-orbit-600: #EA580C;
+  --color-emerald-100: #065F46;
+  --color-emerald-300: #047857;
+  --color-rose-200: #9F1239;
+  --color-rose-300: #BE123C;
+  --color-sky-300: #0369A1;
+  --color-violet-300: #6D28D9;
+
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.625rem;
+  --radius-3xl: 0.75rem;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up .45s ease-out both;
+  --animate-spin-slow: spin 24s linear infinite;
+
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+
+/* Dark palette, scoped to navy regions. */
+.on-navy {
+  --color-white: #FFFFFF;
+  --color-slate-200: #E2E8F0;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #A7B0C4;
+  --color-slate-500: #8790A6;
+  --color-slate-600: #5D6680;
+  --color-ink-950: #161B2C;
+  --color-ink-900: #1C2236;
+  --color-ink-800: #2E3652;
+  --color-ink-700: #3D4766;
+  --color-surface: rgb(46 54 82 / .6);
+  --color-brand-300: #93C5FD;
+  --color-brand-400: #60A5FA;
+  --color-orbit-100: #FFEDD5;
+  --color-orbit-300: #FDBA74;
+  --color-orbit-400: #FB923C;
+  --color-emerald-100: #D1FAE5;
+  --color-emerald-300: #6EE7B7;
+  --color-rose-200: #FECDD3;
+  --color-rose-300: #FDA4AF;
+  color: #CBD5E1;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body {
+  background: #FFFFFF;
+  color: var(--color-slate-300);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-white); }
+
+::selection { background: #F97316; color: #fff; }
+
+@layer components {
+  .glass {
+    background: var(--color-surface);
+    border: 1px solid var(--color-ink-700);
+    box-shadow: 0 1px 2px rgb(16 24 40 / .04);
+  }
+  .on-navy .glass { box-shadow: none; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+  .input {
+    width: 100%;
+    border-radius: .5rem;
+    border: 1px solid var(--color-ink-700);
+    background: var(--color-surface);
+    padding: .625rem .875rem;
+    font-size: .875rem;
+    color: var(--color-white);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .input::placeholder { color: var(--color-slate-500); }
+  .input:focus { border-color: var(--color-brand-500); box-shadow: 0 0 0 3px rgb(59 130 246 / .2); }
+  .input[aria-invalid="true"] { border-color: #E11D48; }
+  select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237B8296' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .75rem center; padding-right: 2.25rem; }
+  select.input option { background: #fff; color: #1B2238; }
+  .label { display: block; margin-bottom: .375rem; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--color-slate-400); }
+
+  .btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    border-radius: .375rem; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 600;
+    transition: filter .15s, transform .1s, border-color .15s, background-color .15s, color .15s;
+    cursor: pointer;
+  }
+  .btn-primary { color: #fff; background: var(--color-orbit-600); }
+  .btn-primary:hover { background: #C2410C; }
+  .btn-secondary { color: var(--color-white); border: 1px solid var(--color-ink-700); background: var(--color-surface); }
+  .btn-secondary:hover { border-color: var(--color-white); }
+  .btn-primary:active, .btn-secondary:active { transform: scale(.98); }
+  .btn-primary:disabled, .btn-secondary:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary:focus-visible, .btn-secondary:focus-visible { outline: 2px solid var(--color-orbit-400); outline-offset: 2px; }
+
+  /* Small uppercase section label, in the style of a corporate index. */
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1rem;
+    font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .16em;
+    color: var(--color-orbit-600);
+  }
+  .section-eyebrow::before { content: ''; width: 1.75rem; height: 1px; background: currentColor; }
+  .on-navy .section-eyebrow { color: var(--color-orbit-400); }
+
+  .scrollbar-thin { scrollbar-width: thin; scrollbar-color: #C9CED8 transparent; }
+}
+
+:focus-visible { outline: 2px solid var(--color-brand-400); outline-offset: 2px; }
+
+/* ---------- Motion ---------- */
+
+/* Scroll reveal (tagged by useScrollReveal). Uses `animation` + `transform` so it never fights
+   Tailwind's hover `translate` / `transition` utilities on the same element. */
+.reveal:not(.is-visible) { opacity: 0; }
+.reveal.is-visible { animation: reveal-up .7s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms) both; }
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Hero headline: each line rises out of a mask. */
+.line-mask { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.line-rise { display: block; animation: line-rise 1s cubic-bezier(.22, 1, .36, 1) var(--line-delay, 0ms) both; }
+@keyframes line-rise {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+
+.fade-in-late { animation: fade-up .8s cubic-bezier(.22, 1, .36, 1) var(--line-delay, 0ms) both; }
+
+/* Underline that draws itself under the accent words. */
+.draw-underline {
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% .06em no-repeat;
+  animation: draw-underline 1s cubic-bezier(.65, 0, .35, 1) 1.2s forwards;
+}
+@keyframes draw-underline { to { background-size: 100% .06em; } }
+
+/* Slow drifting glow behind the navy hero. */
+.hero-glow {
+  position: absolute; pointer-events: none; border-radius: 9999px; filter: blur(80px);
+  animation: drift 18s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, 12%) scale(1.15); }
+  100% { transform: translate(6%, -6%) scale(.95); }
+}
+
+/* Fine grid that slowly pans across the navy band. */
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image:
+    linear-gradient(rgb(255 255 255 / .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / .05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 70% 30%, #000 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 10%, transparent 70%);
+  animation: grid-pan 30s linear infinite;
+}
+@keyframes grid-pan { to { background-position: 64px 64px; } }
+
+/* Scroll progress bar along the bottom of the navbar. */
+.scroll-progress {
+  position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+  transform-origin: left; transform: scaleX(var(--progress, 0));
+  background: linear-gradient(90deg, var(--color-orbit-500), #FDBA74);
+}
+
+/* Soft lift on cards once they're on screen. */
+.reveal.is-visible:is(article) { transition: box-shadow .3s, border-color .3s, translate .3s; }
+.reveal.is-visible:is(article):hover { box-shadow: 0 18px 40px -18px rgb(16 24 40 / .25); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}

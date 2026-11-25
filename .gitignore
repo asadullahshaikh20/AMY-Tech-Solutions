@@ -1,0 +1,6 @@
+node_modules
+dist
+data
+.env
+AMY_TECH.pdf
+.claude/settings.local.json
